@@ -7,6 +7,7 @@ import { useFrame } from "@react-three/fiber";
 import React, { useEffect, useRef } from "react";
 import { angleToRadians } from "../../utils/angle";
 import * as THREE from "three";
+import Sofa from "../sofa";
 const TestComponent = () => {
   const OrbitControlsRef = useRef(null);
   useFrame((state) => {
@@ -36,6 +37,7 @@ const TestComponent = () => {
         <sphereGeometry args={[0.5, 32, 32]} />
         <meshStandardMaterial color="#FFFFFF" />
       </mesh>
+      {<Sofa />}
       {/* Floor */}
       <mesh rotation={[-angleToRadians(90), 0, 0]} receiveShadow>
         <planeGeometry args={[20, 20]} />
