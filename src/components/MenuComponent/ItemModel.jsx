@@ -5,7 +5,7 @@ import Sofa from "../sofa";
 
 function ItemModel() {
   const ref = useRef();
-  useFrame((state, delta) => (ref.current.rotation.y += 0.01));
+  // useFrame((state, delta) => (ref.current.rotation.y += 0.01));
   return (
     <Suspense fallback={null}>
       <mesh ref={ref}>

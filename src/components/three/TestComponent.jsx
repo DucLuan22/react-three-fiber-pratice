@@ -1,61 +1,54 @@
 import {
   Environment,
   OrbitControls,
+  OrthographicCamera,
   PerspectiveCamera,
 } from "@react-three/drei";
-import { useFrame } from "@react-three/fiber";
-import React, { useEffect, useRef } from "react";
-import { angleToRadians } from "../../utils/angle";
+import React, { useRef, useState } from "react";
 import * as THREE from "three";
-import Sofa from "../sofa";
+import { angleToRadians } from "../../utils/angle";
+import Obj from "../Obj";
 const TestComponent = () => {
-  const OrbitControlsRef = useRef(null);
-  useFrame((state) => {
-    if (!!OrbitControlsRef.current) {
-      const { x, y } = state.mouse;
+  const [isDragging, setIsDragging] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
+  const floorPlane = new THREE.Plane(new THREE.Vector3(0, 1, 0), 0);
 
-      // OrbitControlsRef.current.setAzimuthalAngle(-x * angleToRadians(360));
-      OrbitControlsRef.current.update();
-    }
-  });
-  useEffect(() => {
-    if (!OrbitControlsRef.current) {
-      console.log(OrbitControlsRef.current);
-    }
-  }, [OrbitControlsRef.current]);
   return (
     <>
-      <PerspectiveCamera makeDefault position={[0, 5, 9]} />
+      <ambientLight intensity={0.5} />
+      <directionalLight
+        intensity={0.5}
+        castShadow
+        shadow-mapSize-height={300}
+        shadow-mapSize-width={300}
+      />
+
+      <mesh
+        rotation={[-Math.PI / 2, 0, 0]}
+        position={[0, -0.1, 0]}
+        receiveShadow
+      ></mesh>
+
+      <planeHelper args={[floorPlane, 1, "red"]} />
+
+      <gridHelper args={[20, 20]} />
+
+      <Obj
+        setIsDragging={setIsDragging}
+        floorPlane={floorPlane}
+        isEditing={isEditing}
+        model="sofa"
+      />
+
+      <OrthographicCamera makeDefault zoom={50} position={[0, 40, 100]} />
+
       <OrbitControls
-        ref={OrbitControlsRef}
+        minZoom={10}
+        maxZoom={50}
+        enabled={!isDragging}
         maxPolarAngle={angleToRadians(80)}
         minPolarAngle={angleToRadians(30)}
       />
-
-      {/* Ball */}
-      <mesh position={[4, 0.5, 0]} castShadow>
-        <sphereGeometry args={[0.5, 32, 32]} />
-        <meshStandardMaterial color="#FFFFFF" />
-      </mesh>
-      {<Sofa />}
-      {/* Floor */}
-      <mesh rotation={[-angleToRadians(90), 0, 0]} receiveShadow>
-        <planeGeometry args={[20, 20]} />
-        <meshStandardMaterial color="#0392F4" />
-      </mesh>
-      <ambientLight args={["#FFFFFF", 0.25]} />
-      {/* <directionalLight args={["#FFFFFF", 1]} position={[-3, 1, 0]} /> */}
-      <spotLight
-        args={["#FFFFFF", 1.5, 20, angleToRadians(60), 0.4]}
-        position={[-1, 11, 0]}
-        castShadow={true}
-      />
-      <Environment background>
-        <mesh scale={100}>
-          <sphereGeometry args={[1, 64, 64]} />
-          <meshBasicMaterial color="#2288cc" side={THREE.BackSide} />
-        </mesh>
-      </Environment>
     </>
   );
 };

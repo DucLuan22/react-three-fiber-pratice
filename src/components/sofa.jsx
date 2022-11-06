@@ -8,7 +8,6 @@ title: chesterfield-sofa
 
 import React, { useRef } from "react";
 import { useGLTF } from "@react-three/drei";
-import { useFrame } from "@react-three/fiber";
 
 export default function Sofa(props, { ref }) {
   const { nodes, materials } = useGLTF("./models/Sofa/sofaModel.glb");
