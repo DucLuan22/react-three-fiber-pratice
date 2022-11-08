@@ -1,4 +1,4 @@
-import { OrbitControls, OrthographicCamera } from "@react-three/drei";
+import { OrbitControls, OrthographicCamera, Plane } from "@react-three/drei";
 import React, { useRef, useState } from "react";
 import { useContext } from "react";
 import * as THREE from "three";
@@ -6,12 +6,8 @@ import { angleToRadians } from "../../utils/angle";
 import CustomizeContext from "../../utils/CustomizeContext";
 import Obj from "../Obj";
 const TestComponent = () => {
-  const [isDragging, setIsDragging] = useState(false);
-  const [isEditing, setIsEditing] = useState(false);
-  const [item, setItem] = useState("");
-  const [itemList, setObjList] = useState([""]);
   const floorPlane = new THREE.Plane(new THREE.Vector3(0, 1, 0), 0);
-  const { models } = useContext(CustomizeContext);
+  const { models, isDragging } = useContext(CustomizeContext);
   return (
     <>
       <ambientLight intensity={0.5} />
@@ -28,15 +24,31 @@ const TestComponent = () => {
         receiveShadow
       ></mesh>
 
+      <mesh position={[10, 3.5, 0]} rotation={[0, -angleToRadians(90), 0]}>
+        <Plane args={[20, 7, 3]} />
+      </mesh>
+
+      <mesh position={[-10, 3.5, 0]} rotation={[0, angleToRadians(90), 0]}>
+        <Plane args={[20, 7, 3]} />
+      </mesh>
+
+      <mesh position={[0, 3.5, 10]} rotation={[0, angleToRadians(180), 0]}>
+        <Plane args={[20, 7, 3]} />
+      </mesh>
+
+      <mesh position={[0, 3.5, -10]} rotation={[0, angleToRadians(0), 0]}>
+        <Plane args={[20, 7, 3]} />
+      </mesh>
       <planeHelper args={[floorPlane, 1, "red"]} />
 
       <gridHelper args={[20, 20]} />
-      {models.map((name) => (
+
+      {models.map((model) => (
         <Obj
-          setIsDragging={setIsDragging}
           floorPlane={floorPlane}
-          isEditing={isEditing}
-          model={name}
+          model={model.name}
+          id={model.id}
+          key={model.id}
         />
       ))}
 

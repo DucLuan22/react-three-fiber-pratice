@@ -3,13 +3,13 @@ import React, { Suspense, useRef } from "react";
 import { useContext } from "react";
 import { angleToRadians } from "../../utils/angle";
 import CustomizeContext from "../../utils/CustomizeContext";
-import Sofa from "../sofa";
+import Sofa from "../../model/sofa";
 
 function ItemModel({ model }) {
   const ref = useRef();
   const { addModel } = useContext(CustomizeContext);
   // useFrame((state, delta) => (ref.current.rotation.y += 0.01));
-  const Model = require(`../${model}`).default;
+  const Model = require(`../../model/${model}`).default;
   return (
     <Suspense fallback={null}>
       <mesh ref={ref} onClick={(e) => addModel(model)}>

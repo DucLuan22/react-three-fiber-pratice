@@ -6,7 +6,7 @@ source: https://sketchfab.com/3d-models/chesterfield-sofa-66ba4225efaa4de59d9a9b
 title: chesterfield-sofa
 */
 
-import React, { useRef } from "react";
+import React from "react";
 import { useGLTF } from "@react-three/drei";
 
 export default function Sofa(props, { ref }) {
