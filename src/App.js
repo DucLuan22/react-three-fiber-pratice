@@ -1,14 +1,17 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Customize from "./pages/Customize";
 import Home from "./pages/Home";
+import { CustomizeProvider } from "./utils/CustomizeContext";
 function App() {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/customize" element={<Customize />} />
-      </Routes>
-    </BrowserRouter>
+    <CustomizeProvider>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/customize" element={<Customize />} />
+        </Routes>
+      </BrowserRouter>
+    </CustomizeProvider>
   );
 }
 

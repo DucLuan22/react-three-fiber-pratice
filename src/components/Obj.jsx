@@ -1,9 +1,8 @@
 import React, { useState, useRef } from "react";
 import { useDrag } from "@use-gesture/react";
 import { animated, useSpring } from "@react-spring/three";
-import { useThree } from "@react-three/fiber";
+
 import * as THREE from "three";
-import Sofa from "./sofa";
 
 function Obj({ setIsDragging, floorPlane, model }) {
   const Object = require(`./${model}`).default;
