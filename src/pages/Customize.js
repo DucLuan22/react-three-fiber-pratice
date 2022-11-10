@@ -7,8 +7,14 @@ import { useContext } from "react";
 import CustomizeContext from "../utils/CustomizeContext";
 
 const Customize = () => {
-  const { setDragMode, setDeleteMode, isDragMode, isDeleteMode } =
-    useContext(CustomizeContext);
+  const {
+    setDragMode,
+    setDeleteMode,
+    isDragMode,
+    isDeleteMode,
+    setRotateMode,
+    isRotateMode,
+  } = useContext(CustomizeContext);
 
   const [isFurniture, setIsFurniture] = useState(true);
   const [isModifier, setIsModifier] = useState(false);
@@ -26,10 +32,18 @@ const Customize = () => {
   const selectDelete = () => {
     setDeleteMode(true);
     setDragMode(false);
+    setRotateMode(false);
   };
   const selectDrag = () => {
     setDeleteMode(false);
     setDragMode(true);
+    setRotateMode(false);
+  };
+
+  const selectRotate = () => {
+    setRotateMode(true);
+    setDeleteMode(false);
+    setDragMode(false);
   };
   return (
     <div>
@@ -78,6 +92,14 @@ const Customize = () => {
               onClick={selectDelete}
             >
               Delete Mode
+            </button>
+            <button
+              className={`hover:bg-slate-500 opacity-90 py-2 ${
+                isRotateMode && "bg-slate-100 hover:bg-slate-100"
+              }`}
+              onClick={selectRotate}
+            >
+              Rotate Mode
             </button>
           </section>
         )}

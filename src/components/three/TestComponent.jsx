@@ -39,6 +39,7 @@ const TestComponent = () => {
       <mesh position={[0, 3.5, -10]} rotation={[0, angleToRadians(0), 0]}>
         <Plane args={[20, 7, 3]} />
       </mesh>
+
       <planeHelper args={[floorPlane, 1, "red"]} />
 
       <gridHelper args={[20, 20]} />

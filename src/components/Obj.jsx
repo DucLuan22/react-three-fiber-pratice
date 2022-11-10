@@ -12,7 +12,8 @@ function Obj({ floorPlane, model, id }) {
   const { size, viewport } = useThree();
   const aspect = size.width / viewport.width;
   const [pos, setPos] = useState([0, 0, 0]);
-  const { removeModel, isDeleteMode, isDragMode, setDragMode, setIsDragging } =
+  const [rot, setRot] = useState([0, 0, 0]);
+  const { removeModel, isDeleteMode, isDragMode, isRotateMode, setIsDragging } =
     useContext(CustomizeContext);
 
   let planeIntersectPoint = new THREE.Vector3();
@@ -23,8 +24,8 @@ function Obj({ floorPlane, model, id }) {
     // position: [0, 0, 0],
     position: pos,
     scale: 1,
-    rotation: [0, 0, 0],
-    config: { friction: 10 },
+    rotation: rot,
+    config: { friction: 12 },
   }));
 
   const bind = useDrag(
@@ -39,10 +40,16 @@ function Obj({ floorPlane, model, id }) {
           // rotation: [0, x / aspect, 0],
         });
       }
-
+      if (isRotateMode) {
+        setRot([0, x / (1.2 * aspect), 0]);
+        api.start({
+          scale: 1,
+          rotation: rot,
+        });
+        console.log(rot);
+      }
       if (isDeleteMode) {
         removeModel(id);
-        console.log(id);
       }
       setIsDragging(active);
 

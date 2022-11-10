@@ -9,11 +9,17 @@ export function CustomizeProvider({ children }) {
   const [isDeleteMode, setDeleteMode] = useState(false);
   const [isDragMode, setDragMode] = useState(true);
   const [isDragging, setIsDragging] = useState(false);
-  const [isRotateMode, setIsRotateMode] = useState(false);
+  const [isRotateMode, setRotateMode] = useState(false);
+
   const addModel = (name) => {
     setModel((prevState) => [
       ...prevState,
-      { name, id: Math.floor(Math.random() * 1000000) },
+      {
+        name,
+        id: Math.floor(Math.random() * 1000000),
+        rotation: [0, 0, 0],
+        pos: [0, 0, 0],
+      },
     ]);
   };
   const removeModel = (id) => {
@@ -32,7 +38,7 @@ export function CustomizeProvider({ children }) {
         setIsDragging,
         isDragging,
         isRotateMode,
-        setIsRotateMode,
+        setRotateMode,
       }}
     >
       {children}
